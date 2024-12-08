@@ -1,0 +1,43 @@
+:root {
+  --primary-color: #ff6600;
+  --primary-color-hover: #ff5500;
+  --text-color: #fff;
+  --text-color-invert: #000000;
+  --bg-color: #0d0d0d;
+  --bg-color-sec: #101010;
+  --bg-color-ter: #585858;
+  --star-color: #FDC107;
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Saira", sans-serif;
+  font-weight: 500;
+  color: var(--text-color);
+  transition: 0.2s ease-in-out;
+  outline:none;
+  text-underline-offset: 0.4rem;
+  scroll-behavior: smooth;
+}
+
+
+#root{
+  background-color: var(--bg-color);
+}
+
+button{
+  border: none;
+}  
+
+/* Disable arrow of input number */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

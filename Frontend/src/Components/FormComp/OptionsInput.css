@@ -1,0 +1,137 @@
+.options-container{
+    text-align: center;
+    margin: 10px;
+}
+
+.options-container h2{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.btns{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 900px;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.btns .option-btn{
+    width: 280px;
+    height: 50px;
+    position: relative;
+    cursor: pointer;
+    border: 1px solid var(--text-color);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.option-btn .buttonBG{
+    width: 100%;
+    opacity: 0.5;
+}
+
+.option-btn .name{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-shadow: 1px 1px 3px var(--bg-color);
+    width: 80%;
+}
+
+.option-btn:hover > .buttonBG{
+    opacity: 0.2;
+}
+
+.option-btn-selected{
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+.option-btn-selected > .buttonBG, .option-btn-selected:hover > .buttonBG{
+    opacity: 0;
+}
+.option-btn-selected .name{
+    text-shadow: none;
+}
+.option-btn-selected:hover{
+    background-color: var(--primary-color-hover) !important;
+}
+.add-new .box{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.box label{
+    width: 150px;
+}
+
+.box input{
+    width: 200px;
+    height: 30px;
+    padding: 0 5px;
+    color: var(--bg-color);
+}
+
+.suggestions-list{
+    list-style: none;
+    position: absolute;
+    background-color: var(--bg-color);
+    z-index: 5;
+}
+
+.suggestions-list li{
+    display: flex;
+    align-items: center;
+    padding:5px 20px;
+    margin: 5px;    
+    width: 220px;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.suggestions-list li:hover{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+.selected-options{
+    margin: 5px;
+    display: flex;
+}
+.selected-options .tag{
+    display: flex;
+    align-items: center;
+    margin: 5px;    
+    width: max-content;
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    height: 30px;
+}
+
+.tag .name{
+    color: var(--bg-color);
+    padding: 5px 20px;
+}
+
+.tag button{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.tag button:hover{
+    background-color: var(--bg-color-4);
+}

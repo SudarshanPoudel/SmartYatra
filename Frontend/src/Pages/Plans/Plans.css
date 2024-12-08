@@ -1,0 +1,59 @@
+.banner{
+    width: 100vw;
+    height: 60vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner .banner-image{
+    width: 100vw;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;   
+}
+
+.banner-image img{
+    width: 100%;
+    min-height: 100%;
+    opacity: 0.1;
+}
+.banner-text{
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 5px 5px 10px #000;
+    border-bottom: 6px solid var(--primary-color);
+    border-radius: 100%;
+}
+
+.plans-navbar{
+    width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+.plan-nav {
+    background: transparent;
+    font-size: 1.3rem;
+    font-weight: 600;
+    padding: 0 5px;
+    border-bottom: 4px solid transparent;
+    cursor: pointer;
+}
+
+.plan-nav:hover{
+    border-bottom: 4px solid var(--primary-color);
+}
+
+.plan-nav-active{
+    color: var(--primary-color);
+    border-bottom: 4px solid var(--primary-color);
+}

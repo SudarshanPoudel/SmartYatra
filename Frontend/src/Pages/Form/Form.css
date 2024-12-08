@@ -1,0 +1,106 @@
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    padding: 10vh 6vw;
+}
+
+.form-heading{
+    font-size: 2rem;
+    border-bottom: 4px solid var(--primary-color);
+    border-radius: 100%;
+    padding: 0 10px;
+    margin-bottom: 30px;
+}
+
+.form-heading span{
+    font-weight: 700;
+}
+
+.basic-input{
+    display: flex;
+    gap:30px;
+    width: 60vw;
+    justify-content: center;
+}
+
+.text-input{
+    margin-bottom: 10px;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+
+.text-input label{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.text-input input{
+    color: var(--text-color-invert);
+    border-radius: 10px;
+    border: none;
+    font-size: 1.2rem;
+    padding:7px 10px;
+    width: 200px;
+}
+
+.budget-input{
+    position: relative;
+}
+
+.currency-toggle {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 50px;
+    height: 80%;
+    font-size: 0.9rem;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+}
+.currency-toggle:hover {
+    background-color: var(--primary-color-hover);
+}
+
+
+.text-input-extra label{
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--primary-color);
+    padding: 0 2px;
+    margin: 10px;
+}
+
+.extra-instructions{
+    display: block;
+    width: 580px;
+    height: 100px;
+    color: var(--bg-color);
+    padding: 5px 10px;
+    margin: 10px;
+    resize: none;
+}
+.plan-btn{
+    width: max-content;
+    height: 50px;
+    padding: 0 100px;
+    margin: 10px auto;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.plan-btn:hover{
+    background-color: var(--primary-color-hover);
+}
