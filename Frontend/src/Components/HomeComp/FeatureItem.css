@@ -1,0 +1,28 @@
+.feature-item{
+    display: flex;
+    gap: 25%;
+    margin: 10vh auto;
+    justify-content: space-between;
+}
+
+.feature-item.img-left{
+    flex-flow: row-reverse;
+}
+
+.feature-item .text-part .item-title{
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 15px 0;
+}
+
+.text-part ul{
+    padding-left: 1rem;
+}
+
+.text-part ul li{
+    margin: 20px;
+}
+
+.image-part{
+    margin-top: 1rem;
+}

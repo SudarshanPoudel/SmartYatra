@@ -1,71 +1,62 @@
 .nav {
     display: flex;
-    width: 100vw;
-    height: 7vh;
+    width: 56vw;
+    height: 6vh;
     justify-content: space-between;
     align-items: center;
-    padding: 0 3vw;
-    position: fixed;
-    top: 0;
+    padding: 22px;
+    position: absolute;
+    top: 3vh;
+    left: 20vw;
     z-index: 999;
-    background: transparent; /* Default background */
-  }
-  
-  .nav.scrolled {
-    background: var(--bg-color-sec); 
-  }
-  
-.left-nav p{
-    font-size: 1.7rem;
-    font-weight: 400;
+    background-color: var(--nav-color);
+    box-shadow: 0 0 5px var(--bg-color);
+    border-radius: 16px;
 }
 
-.left-nav p span{
-    font-weight: 600;
+
+.left-nav p {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: bolder;
 }
 
-.right-nav ul{
+
+.right-nav ul {
     display: flex;
     list-style: none;
+    align-items: center;
     justify-content: space-between;
-    width: 40vw;
+    width: 45vw;
 }
 
-.right-nav ul li{
+.right-nav ul li {
+    color: var(--bg-color);
     cursor: pointer;
 }
 
 
-.list, .active{ 
+.list,
+.active {
     color: var(--text-color-highlight);
     text-shadow: 10px 0 0 0 var(--bg-color);
     padding: 0 5px;
-    font-weight: 600;
 }
 
-.active{
-    color: var(--primary-color);
-    border-bottom: 2px solid var(--primary-color);
-}
 
-.active:hover{
-    color: var(--primary-color-hover);
-    border-bottom: 2px solid var(--primary-color-hover);
-}
-
-.list:hover{
+.active:hover, .list:hover {
     color: var(--primary-color);
 }
 
-.right-nav ul .login-btn{
+.right-nav ul .login-btn {
     background-color: var(--primary-color);
-    padding: 5px 20px 7px 20px;
+    padding: 2px 16px;
     border-radius: 10px;
-    font-weight: 600;
-    color: var(--text-color-highlight);
+    color: var(--text-color);
     cursor: pointer;
+    font-size: 0.9rem;
 }
 
-.right-nav ul .login-btn:hover{
+.right-nav ul .login-btn:hover {
     background-color: var(--primary-color-hover);
 }

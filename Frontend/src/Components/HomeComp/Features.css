@@ -1,0 +1,16 @@
+.feature-comp{
+    padding: 2vh 5vw;
+}
+
+.feature-comp .title, .feature-comp .title span{
+    text-align: center;
+    font-weight: 600;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin: 20px 6px;
+}
+
+.title span{
+    border-bottom: 4px solid var(--text-color);
+    padding: 0 6px;
+}

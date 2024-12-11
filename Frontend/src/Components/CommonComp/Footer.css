@@ -1,11 +1,15 @@
 .footer{
     width: 100%;
-    background-color: var(--bg-color-sec);
+    background-color: var(--nav-color);
     z-index: 999;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-top: 6px solid var(--primary-color);
+}
+
+.footer *{
+    color: var(--text-color-invert);
 }
 
 .social-icon{
