@@ -1,9 +1,11 @@
-import React, { useState, useContext, act } from 'react';
+import React, { useState, useContext, act, useEffect } from 'react';
 import './Form.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import {MultiOptionSelector, SimpleOptionsSelector} from '../../Components/FormComp/OptionsInput';
 import { useNavigate } from 'react-router-dom';
+import { useFetch } from '../../ApiFetch/useFetch';
+import { food_options, place_type_options, themes_options, travel_options } from './FormOption';
 
 
 export const Form = () => {
@@ -18,72 +20,12 @@ export const Form = () => {
   const [accommodation, setAccommodation] = useState('');
   const [foods, setFoods] = useState('');
 
+ 
+  // APi fetch
+  const {data : allActivities} = useFetch('all-activities');
+  const {data : allPlaces} = useFetch('all-places');
 
   
-  const places_options = []
-  const activities_options = []
-
-  const themes_options = [
-    {
-      "name": "Exploration",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Educational",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Religious",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    }
-  ]
-
-  const place_type_options = [
-    {
-      "name": "Commercial",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Historic",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Religious",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Cultural",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Natural",
-      "image": "https://d3mvlb3hz2g78.cloudfront.net/wp-content/uploads/2018/02/thumb_720_450_Jungledreamstime_l_56902828.jpg"
-    },
-    {
-      "name": "Wildlife",
-      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH9eTvV4wbXjs7XTgb_PKV6i9L697Q2qoNTw&s"
-    }
-  ];
-  const food_options = [
-    {
-      'name': 'Non-Vegetarian',
-      "image": "https://parade.com/.image/ar_16:9%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk3NzM1OTc2NzkxOTc1MjEz/best-meat-source-gut-health.jpg"
-    },
-    {
-      'name': 'Vegetarian',
-      "image": "https://i0.wp.com/post.healthline.com/wp-content/uploads/2021/10/food-rainbow-vegetable-fruit-variety-group-healthy-1296x728-header.jpg?w=1155&h=1528"
-    }
-  ]
-  const travel_options = [
-    {
-      'name': 'Public',
-      "image": "https://cdn.kimkim.com/files/a/content_articles/featured_photos/8429ce1e9fd968cab650cf1668a1e50c14a1cd7d/big-0e7d251e6b331de6e83619725d4844e9.jpg"
-    },
-    {
-      'name': 'Private',
-      "image": "https://s3.ap-south-1.amazonaws.com/chsfiles/media/eEfrCinGpB2vTIyv79JxkQRgiOavd7vuUEbahyoO.jpeg"
-    }
-  ]
 
   const urlArgs = (data)=>{
     let str = ''
@@ -102,8 +44,8 @@ export const Form = () => {
   }
 
 
-
-  const handleSubmit = (e) => {
+// Handling form Submit
+  const handleSubmit =  (e) => {
     e.preventDefault();
 
     if (!day || !budget) {
@@ -113,8 +55,10 @@ export const Form = () => {
 
     let args = urlArgs();
     navigate('/package' + '?' +args)
-  };
 
+  }
+
+  // Toggling Currency
   const toggleCurrency = () => {
     setCurrency((prevCurrency) => (prevCurrency === "NPR" ? "USD" : "NPR"));
   };
@@ -147,8 +91,8 @@ export const Form = () => {
 
       <SimpleOptionsSelector label_text="What is your primary interest for this trip? " given_options={themes_options} onOptionsChange={setTheme}/>
       <MultiOptionSelector label_text="What types of places excites you? " given_options={place_type_options} onOptionsChange={setTheme}/>
-      <MultiOptionSelector label_text="Are there any specific places in your mind?" given_options={place_type_options} onOptionsChange={setPlaces}/>
-      <MultiOptionSelector label_text="Any activities you want to do in your trip?" given_options={place_type_options} onOptionsChange={setActivities}/>
+      <MultiOptionSelector label_text="Are there any specific places in your mind?" given_options={allPlaces} onOptionsChange={setPlaces}/>
+      <MultiOptionSelector label_text="Any activities you want to do in your trip?" given_options={allActivities} onOptionsChange={setActivities}/>
 
     
       <SimpleOptionsSelector label_text="What type of food you prefer?" given_options={food_options} onOptionsChange={setFoods}/>
