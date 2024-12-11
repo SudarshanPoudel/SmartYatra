@@ -16,7 +16,6 @@ export const Footer = () => {
           <FaYoutube />
       </div>
         <ul className="lists">
-          <li>About Us</li>
           <li>Contact Us</li>
           <li>Terms of Service</li>
           <li>Refund Policy</li>

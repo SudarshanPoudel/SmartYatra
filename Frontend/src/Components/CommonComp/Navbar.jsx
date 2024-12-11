@@ -28,7 +28,7 @@ export const Navbar = () => {
     <div className={`nav ${isScrolled ? 'scrolled' : ''}`}>
       <div className="left-nav">
         <p>
-          Smart<span>Yatra</span>
+          Dora
         </p>
       </div>
       <div className="right-nav">
@@ -58,6 +58,16 @@ export const Navbar = () => {
               className={menu === 'plans' || menu === 'form' ? 'active' : 'list'}
             >
               Plans
+            </Link>
+          </li>
+
+          <li className="menu-item">
+            <Link
+              style={{ textDecoration: 'none' }}
+              to="/"
+              className={menu === 'aboutus' ? 'active' : 'list'}
+            >
+              About us
             </Link>
           </li>
           <li className="menu-item">

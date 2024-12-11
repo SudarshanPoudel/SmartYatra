@@ -3,43 +3,79 @@
     height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 12vh 6vw 3vh 6vw;
+    background: radial-gradient(
+        circle at 0% 0%, 
+        rgba(255, 72, 0, 0.2),
+        rgba(0, 0, 0, 0) 50%
+      ),
+      var(--bg-color)
 }
 
 .bg-image{
     width: 100vw;
-    max-height: 100vh;
     opacity: 0.1;
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
+    filter: grayscale();
+    z-index: 0;
 }
 
-.mid-sec{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1;
+.left-sec{
+    width: 40vw;
 }
+
+
 
 .quote{
-    font-size: 1.5rem;
-    font-style: italic;
-    text-align: center;
-    margin-bottom: 30px;
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    line-height: 3.6rem;
 }
 
 .generate-plan{
-    padding: 10px 40px;
+    padding: 8px 80px;
     background-color: var(--primary-color);
     font-size: 1.5rem;
-    font-weight: 600;
+    font-weight: 500;
     border-radius: 25px;
     cursor: pointer;
 }
 
 
+.generate-plan .spark-icon{
+    margin:0px 8px -5px 0;
+    font-size: 1.5rem;
+}
+
 .generate-plan:hover{
     background-color: var(--primary-color-hover);
+}
+
+.right-sec{
+    height: 100%;
+    width: 44vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.caro-image{
+    width: 30%;
+    overflow: hidden;
+    clip-path: polygon(0 0, 100% 15%, 100% 100%, 0 85%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.caro-image > img{
+    position: absolute;
+    height: 100%;
+    filter: contrast(120%);
 }

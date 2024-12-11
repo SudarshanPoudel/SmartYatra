@@ -1,25 +1,27 @@
 :root {
-  --primary-color: #ff6600;
-  --primary-color-hover: #ff5500;
+  --primary-color: #ff4800;
+  --primary-color-hover: #dd3f00;
   --text-color: #fff;
   --text-color-invert: #000000;
-  --bg-color: #0d0d0d;
-  --bg-color-sec: #101010;
+  --bg-color: #191716;
+  --bg-color-sec: #262626;
   --bg-color-ter: #585858;
   --star-color: #FDC107;
+  --nav-color: #cfcfcf;
 }
 
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Saira", sans-serif;
-  font-weight: 500;
+  font-family: "Poppins", serif;
+  font-weight: 400;
   color: var(--text-color);
   transition: 0.2s ease-in-out;
   outline:none;
   text-underline-offset: 0.4rem;
   scroll-behavior: smooth;
+  z-index: 1;
 }
 
 
@@ -40,4 +42,10 @@ input::-webkit-inner-spin-button {
 
 input[type=number] {
   -moz-appearance: textfield;
+}
+
+a{
+  font-weight: inherit;
+  font-size: inherit;
+  color: inherit;
 }
