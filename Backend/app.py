@@ -5,8 +5,20 @@ import pandas as pd
 
 from plans import generate_plan, edit_plan
 from data import retrieve_place_details, retrieve_all_places, store_chunks, delete_chunk
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Pydantic model to handle the incoming request body
 class TourPlanRequest(BaseModel):
