@@ -1,7 +1,7 @@
 :root {
   --primary-color: #ff4800;
   --primary-color-hover: #dd3f00;
-  --text-color: #fff;
+  --text-color: #fce5e5;
   --text-color-invert: #000000;
   --bg-color: #191716;
   --bg-color-sec: #262626;
@@ -21,13 +21,8 @@
   outline:none;
   text-underline-offset: 0.4rem;
   scroll-behavior: smooth;
-  z-index: 1;
 }
 
-
-#root{
-  background-color: var(--bg-color);
-}
 
 button{
   border: none;

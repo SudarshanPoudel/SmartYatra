@@ -20,9 +20,6 @@ export const Footer = () => {
           <li>Terms of Service</li>
           <li>Refund Policy</li>
         </ul>
-      <div className="details">
-        <p>"SmartYatra is your premier platform for exploring Nepal s wonders with confidence. Offering AI-driven itineraries, seamless bookings, and expert local insights, we re dedicated to crafting personalized journeys that redefine travel experiences in Nepal."</p>
-      </div>
       <div className="copyright">
         <p>Copyright © 2024 SmartYatra, All rights reserved.</p>
       </div>

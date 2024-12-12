@@ -9,9 +9,9 @@ places_df['description_llm'] = places_df.apply(
     axis=1
 )
 
+print("Storing places started...")
 for index, row in places_df.iterrows():
     row_dict = row.to_dict()  
-    print("Storing places started...")
     store_chunks(row_dict)
     if((index+1)%10 == 0):
         print(f"{index+1} Places added...")

@@ -5,7 +5,7 @@ export const MultiOptionSelector = ({ label_text, given_options, onOptionsChange
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
-
+  console.log(given_options)
   useEffect(() => {
     if (onOptionsChange) {
       onOptionsChange(options);
@@ -29,7 +29,7 @@ export const MultiOptionSelector = ({ label_text, given_options, onOptionsChange
       const filtered = given_options.filter(option =>
         option.name.toLowerCase().includes(value.toLowerCase()) &&
         !options.includes(option.name) // Exclude already selected options
-      );
+      ).slice(0,5);
       setFilteredOptions(filtered);
     } else {
       setFilteredOptions([]);
@@ -66,11 +66,11 @@ export const MultiOptionSelector = ({ label_text, given_options, onOptionsChange
         ))}
       </div>
   
-      {/* Render the "Add More Options" only if there are more than 6 items */}
+      {/* Render the "Search More Options" only if there are more than 6 items */}
       {given_options.length > 6 && (
         <div className="add-new">
           <div className="box">
-            <label>Add More Options: </label>
+            <label>Search More Options: </label>
             <input
               type="text"
               value={inputValue}
