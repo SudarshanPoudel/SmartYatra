@@ -73,33 +73,31 @@ export const Form = () => {
     // navigate("/package" + "?" + args);
 
 
-    // Data to be sent
     const formData = {
-      user_location : startLoc,
-      no_of_days : day,
-      priority_place_types : placeTypes ,
-      priority_activities : activities,
-      priority_places : places,
-      extra_desc : extra,
-    }
-    // console.log(formData);
-
+      user_location: startLoc,
+      tour_type: themes, // Ensure this field is populated correctly
+      no_of_days: parseInt(day), // Convert to integer
+      priority_place_types: placeTypes.join(','), // Convert array to comma-separated string
+      priority_activities: activities.join(','), // Convert array to comma-separated string
+      priority_places: places.join(','), // Convert array to comma-separated string
+      extra_desc: extra || "", // Default to empty string if undefined
+    };
     
-      try{
-        // Making POST request
-        const response = await axios.post('http://127.0.0.1:8000/generate-plan', {formData});
-      
-        // Handle the response (e.g., navigate to another page or show success message)
+    try {
+      // Send formData directly
+      const response = await axios.post('http://127.0.0.1:8000/generate-plan', formData);
+    
       if (response.status === 200) {
         console.log('Plan generated successfully:', response.data);
-         alert('Form Submitted')
+        alert('Form Submitted');
       } else {
         alert('Failed to generate plan. Please try again.');
       }
-      }catch(error){
-        console.log('Error generating plan:', error);
-        alert('An error occurred. Please try again.');
-      }
+    } catch (error) {
+      console.error('Error generating plan:', error);
+      alert('An error occurred. Please try again.');
+    }
+    
 
 
            // Clear form inputs

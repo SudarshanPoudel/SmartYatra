@@ -31,14 +31,16 @@ def response_into_dict(response):
 
 
 def generate_plan(
-    user_location='Kathmandu', 
-    tour_type='Adventure', 
-    no_of_days=3, 
+    user_location,
+    tour_type,
+    no_of_days,
     priority_place_types='',
     priority_activities='',
     priority_places='',
     extra_desc='',
 ):
+    print("USer location is")
+    print(user_location)
 
     user_desc = f"I am going for {tour_type} tour from {user_location}. "
 

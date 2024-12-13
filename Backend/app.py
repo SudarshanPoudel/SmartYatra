@@ -22,9 +22,9 @@ app.add_middleware(
 
 # Pydantic model to handle the incoming request body
 class TourPlanRequest(BaseModel):
-    user_location: str = 'Bharatpur'
-    tour_type: str = 'Adventure'
-    no_of_days: int = 3
+    user_location: str
+    tour_type: str
+    no_of_days: int
     priority_place_types:str = ''
     priority_activities:str = ''
     priority_places:str = ''
@@ -51,7 +51,9 @@ class PlaceAddRequest(BaseModel):
 # POST endpoint to generate a tour plan
 @app.post("/generate-plan")
 def generate_trip_plan(request: TourPlanRequest):
+    print("HEHEHEHEHEH")
     params = request.model_dump()
+    print(params)
     plan = generate_plan(**params)
     return JSONResponse(content=plan)
 
