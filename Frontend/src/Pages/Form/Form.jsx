@@ -14,6 +14,7 @@ import {
   travel_options,
 } from "./FormOption";
 import bgImage from "../../Assets/Image/homepagebg.png"
+import axios from "axios";
 
 export const Form = () => {
   const navigate = useNavigate();
@@ -35,42 +36,88 @@ export const Form = () => {
   const { data: allPlaces } = useFetch("all-places");
   const { data: allPlaceTypes } = useFetch("all-placetypes");
 
-  const urlArgs = (data) => {
-    let str = "";
-    str =
-      "days=" +
-      day +
-      "&budget=" +
-      budget +
-      "&accommodation=" +
-      accommodation +
-      "&food=" +
-      foods;
-    places.forEach((e) => {
-      str += "&place=" + e;
-    });
-    themes.forEach((e) => {
-      str += "&type=" + e;
-    });
-    activities.forEach((e) => {
-      str += "&activities=" + e;
-    });
+  // const urlArgs = (data) => {
+  //   let str = "";
+  //   str =
+  //     "days=" +
+  //     day +
+  //     "&budget=" +
+  //     budget +
+  //     "&accommodation=" +
+  //     accommodation +
+  //     "&food=" +
+  //     foods;
+  //   places.forEach((e) => {
+  //     str += "&place=" + e;
+  //   });
+  //   themes.forEach((e) => {
+  //     str += "&type=" + e;
+  //   });
+  //   activities.forEach((e) => {
+  //     str += "&activities=" + e;
+  //   });
 
-    return str;
-  };
+  //   return str;
+  // };
+
 
   // Handling form Submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!day || !budget) {
+    if (!day || !budget || !startLoc) {
       alert("Please Number of days and your budget");
       return;
     }
 
-    let args = urlArgs();
-    navigate("/package" + "?" + args);
+    // let args = urlArgs();
+    // navigate("/package" + "?" + args);
+
+
+    // Data to be sent
+    const formData = {
+      user_location : startLoc,
+      no_of_days : day,
+      priority_place_types : placeTypes ,
+      priority_activities : activities,
+      priority_places : places,
+      extra_desc : extra,
+    }
+    // console.log(formData);
+
+    
+      try{
+        // Making POST request
+        const response = await axios.post('http://127.0.0.1:8000/generate-plan', {formData});
+      
+        // Handle the response (e.g., navigate to another page or show success message)
+      if (response.status === 200) {
+        console.log('Plan generated successfully:', response.data);
+         alert('Form Submitted')
+      } else {
+        alert('Failed to generate plan. Please try again.');
+      }
+      }catch(error){
+        console.log('Error generating plan:', error);
+        alert('An error occurred. Please try again.');
+      }
+
+
+           // Clear form inputs
+           setDay("");
+           setStartDate(new Date());
+           setBudget("");
+           setStartLoc("");
+           setCurrency("NPR");
+           setExtra("");
+           setPlaces([]);
+           setPlaceTypes([]);
+           setTheme([]);
+           setActivities([]);
+           setAccommodation("");
+           setFoods("");
   };
+
+  
 
   // Toggling Currency
   const toggleCurrency = () => {

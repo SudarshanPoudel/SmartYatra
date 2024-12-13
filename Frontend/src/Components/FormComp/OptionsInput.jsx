@@ -5,7 +5,8 @@ export const MultiOptionSelector = ({ label_text, given_options, onOptionsChange
   const [options, setOptions] = useState([]);
   const [inputValue, setInputValue] = useState('');
   const [filteredOptions, setFilteredOptions] = useState([]);
-  console.log(given_options)
+  // console.log(given_options)
+  
   useEffect(() => {
     if (onOptionsChange) {
       onOptionsChange(options);

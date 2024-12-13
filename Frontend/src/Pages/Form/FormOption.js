@@ -63,6 +63,14 @@ export const travel_options = [
 
 
 
+// "user_location": "Bharatpur",
+// "tour_type": "Adventure",
+// "no_of_days": 3,
+// "priority_place_types": "",
+// "priority_activities": "",
+// "priority_places": "",
+// "extra_desc": ""
+
 
      // Prepare the data to be sent
     //  const formData = {
