@@ -28,13 +28,13 @@ export const Main = () => {
       </div>
         <div className="right-sec">
           <div className="caro-image">
-            <img src={banner1} alt="" srcset="" />
+            <img src={banner1} alt=""/>
           </div>
           <div className="caro-image">
-            <img src={banner2} alt="" srcset="" />
+            <img src={banner2} alt="" />
           </div>
           <div className="caro-image">
-            <img src={banner3} alt="" srcset="" />
+            <img src={banner3} alt="" />
           </div>
         </div>
       </div>

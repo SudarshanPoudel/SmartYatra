@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Navbar } from "./Components/CommonComp/Navbar"
 import { Footer } from "./Components/CommonComp/Footer"
 
@@ -12,16 +12,18 @@ import { Plans } from "./Pages/Plans/Plans"
 
 function App() {
   return (
-    <>
-        <Navbar />
-        <Routes>
+  
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
            <Route path="/" element={<Home />} />
            <Route path="/explore" element={<Explore />} />
            <Route path="/form" element={<Form />} />
            <Route path="/plans" element={<Plans />} />
-        </Routes>
-        <Footer />
-    </>
+         </Routes>
+         <Footer />
+        </BrowserRouter>
+  
   );
 }
 

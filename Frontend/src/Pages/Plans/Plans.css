@@ -57,3 +57,21 @@
     color: var(--primary-color);
     border-bottom: 4px solid var(--primary-color);
 }
+
+.noPlan{
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    margin: 8rem 0 2rem 0;
+}
+.noPlan p{
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.noPlan p:hover{
+    background-color: var(--primary-color-hover);
+}

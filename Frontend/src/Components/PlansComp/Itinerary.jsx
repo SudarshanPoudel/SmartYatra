@@ -1,16 +1,18 @@
 import React from 'react'
-
-import { data } from './data.js'
 import PlaceDetails from './PlaceDetails.jsx'
 import ItineraryDay from './ItineraryDay.jsx'
 import './Itinerary.css'
+import { useSelector } from 'react-redux'
 
 export const Itinerary = () => {
+
+  const formResponse = useSelector(state => state.formResponseData.responseData);
+  console.log(formResponse)
   
   return (
     <div className='itinerary-container'>
       <div className="itinerary">
-      {data['itinerary'].map((day, index) => (
+      {formResponse['itinerary'].map((day, index) => (
         <ItineraryDay key={index} data={day} />
       ))}
       </div>

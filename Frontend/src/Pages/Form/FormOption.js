@@ -107,3 +107,32 @@ export const travel_options = [
     //   alert('An error occurred. Please try again.');
     // }
     
+
+      // const urlArgs = (data) => {
+  //   let str = "";
+  //   str =
+  //     "days=" +
+  //     day +
+  //     "&budget=" +
+  //     budget +
+  //     "&accommodation=" +
+  //     accommodation +
+  //     "&food=" +
+  //     foods;
+  //   places.forEach((e) => {
+  //     str += "&place=" + e;
+  //   });
+  //   themes.forEach((e) => {
+  //     str += "&type=" + e;
+  //   });
+  //   activities.forEach((e) => {
+  //     str += "&activities=" + e;
+  //   });
+
+  //   return str;
+  // };
+
+  
+    // let args = urlArgs();
+    // navigate("/package" + "?" + args);
+

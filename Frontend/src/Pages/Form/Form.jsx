@@ -15,9 +15,14 @@ import {
 } from "./FormOption";
 import bgImage from "../../Assets/Image/homepagebg.png"
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setformResponse } from "../../Redux/formResponseSlice";
 
 export const Form = () => {
+ 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [day, setDay] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [budget, setBudget] = useState("");
@@ -36,30 +41,6 @@ export const Form = () => {
   const { data: allPlaces } = useFetch("all-places");
   const { data: allPlaceTypes } = useFetch("all-placetypes");
 
-  // const urlArgs = (data) => {
-  //   let str = "";
-  //   str =
-  //     "days=" +
-  //     day +
-  //     "&budget=" +
-  //     budget +
-  //     "&accommodation=" +
-  //     accommodation +
-  //     "&food=" +
-  //     foods;
-  //   places.forEach((e) => {
-  //     str += "&place=" + e;
-  //   });
-  //   themes.forEach((e) => {
-  //     str += "&type=" + e;
-  //   });
-  //   activities.forEach((e) => {
-  //     str += "&activities=" + e;
-  //   });
-
-  //   return str;
-  // };
-
 
   // Handling form Submit
   const handleSubmit = async (e) => {
@@ -69,10 +50,7 @@ export const Form = () => {
       return;
     }
 
-    // let args = urlArgs();
-    // navigate("/package" + "?" + args);
-
-
+  
     const formData = {
       user_location: startLoc,
       tour_type: themes, // Ensure this field is populated correctly
@@ -86,11 +64,14 @@ export const Form = () => {
     try {
       // Send formData directly
       const response = await axios.post('http://127.0.0.1:8000/generate-plan', formData);
-    
+      
       if (response.status === 200) {
         console.log('Plan generated successfully:', response.data);
-        alert('Form Submitted');
-      } else {
+         // Dispatch response to Redux store
+         dispatch(setformResponse(response.data));
+         navigate('/plans');
+      } 
+      else {
         alert('Failed to generate plan. Please try again.');
       }
     } catch (error) {
@@ -98,8 +79,6 @@ export const Form = () => {
       alert('An error occurred. Please try again.');
     }
     
-
-
            // Clear form inputs
            setDay("");
            setStartDate(new Date());
