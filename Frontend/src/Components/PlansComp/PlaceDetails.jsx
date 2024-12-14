@@ -3,6 +3,7 @@ import { FaStar, FaRegStarHalfStroke, FaRegStar } from "react-icons/fa6";
 import "./PlaceDetails.css";
 
 const PlaceDetails = () => {
+  
   const place_data = {
     Image: "https://adventuretrekkingtour.com/wp-content/uploads/2019/04/Sarankot-Phewa-lake-hiking.jpg",
     activities: ["Trekking", "Scenic Views"],
