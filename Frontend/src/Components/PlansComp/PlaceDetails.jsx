@@ -5,6 +5,7 @@ import "./PlaceDetails.css";
 const PlaceDetails = (data) => {
   const place_data = data.item
   console.log(place_data)
+
   // Generate stars based on rating
   const renderStars = (rating) => {
     const stars = [];
