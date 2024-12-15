@@ -91,9 +91,26 @@ def query_chunks(query: str, top_n: int = 10) -> list:
 
 # Retrieve information of place given the id
 def retrieve_place_details(place_id:int)->dict:
+    if(int(place_id) == -1):
+        try:
+            from app import get_plan_data
+            plan_data = get_plan_data()
+            return {'id': -1,
+                'latitude': plan_data['user_lat'],
+                'longitude': plan_data['user_long'],
+                "name": "",
+                "image": ""
+                }
+        except:
+            return {'id': -1,
+                'latitude': 0.0,
+                'longitude': 0.0,
+                "name": "",
+                "image": ""
+                }
     collection = initialize_chroma_client()
     try:
-        data = collection.get(ids=[str(place_id)])['metadatas']
+        data = collection.get(ids=[str(place_id)])['metadatas'][0]
         return data
     except:
         return None

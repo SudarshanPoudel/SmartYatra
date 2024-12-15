@@ -2,12 +2,13 @@
   --primary-color: #ff4800;
   --primary-color-hover: #dd3f00;
   --text-color: #fce5e5;
-  --text-color-invert: #000000;
   --bg-color: #191716;
-  --bg-color-sec: #262626;
+  --bg-color-sec: #2d2d2d;
   --bg-color-ter: #585858;
   --star-color: #FDC107;
   --nav-color: #cfcfcf;
+  --iter-bg-1: #f6f6f6;
+  --iter-bg-2: #ffffff;
 }
 
 *{
@@ -21,6 +22,11 @@
   outline:none;
   text-underline-offset: 0.4rem;
   scroll-behavior: smooth;
+}
+
+body{
+  width: 100vw;
+  overflow-x: hidden;
 }
 
 

@@ -12,9 +12,9 @@
 
 .place-info {
   height: 70%;
-  padding: 5px;
+  padding: 5px 15px;
   text-align: center;
-  background-color: var(--text-color);
+  background-color: var(--iter-bg-1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +38,6 @@
 }
 
 .type-tag{
-  font-style: italic;
   padding: 0 20px;
   border-radius: 10px;
   z-index: 2;
@@ -66,12 +65,26 @@
   margin-right: 0.1em;
   fill: var(--primary-color);
 }
+.overview{
+  text-align: left;
+}
+
+.overview h3{
+  color: var(--bg-color-sec);
+  margin-top: 15px;
+  font-weight: 600;
+}
+
+.your-activity{
+  color: var(--bg-color-sec);
+  text-align: left;
+}
 
 .place-description {
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--bg-color-ter);
-  margin: 20px 0;
   text-align: justify ;
+  height: 60%;
 }
 
 .view-map-btn {
@@ -82,6 +95,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.1rem;
+  margin-top: 10px;
 }
 
 .view-map-btn:hover {

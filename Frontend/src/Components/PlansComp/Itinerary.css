@@ -3,6 +3,7 @@
     position: relative;
     width: 96vw;
     gap: 10px;
+    background-color: var(--bg-color);
 }
 
 .itinerary-container .itinerary{
@@ -13,10 +14,10 @@
 .itinerary-container .details{
     position: -webkit-sticky; 
     position: sticky;
-    height: 85vh;
+    height: 97vh;
     width: 50%;
     right: 0;
-    top: 10vh;
+    top: 1vh;
     bottom: 0;
     overflow: hidden;
     margin: 3vh 0;

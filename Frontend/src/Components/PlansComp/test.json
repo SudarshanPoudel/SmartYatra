@@ -1,0 +1,292 @@
+{
+  "trip_title": "Nepal Cultural and Wildlife Exploration",
+  "itinerary": [
+    {
+      "day": 1,
+      "title": "Chitwan National Park and Tharu Village",
+      "schedule": [
+        {
+          "type": "travel",
+          "time": "Morning",
+          "duration": "3 hours",
+          "origin_id": "-1",
+          "destination_id": "32",
+          "origin": "",
+          "origin_latitude": 27.7283893,
+          "origin_longitude": 84.3647199,
+          "origin_image": "",
+          "destination": "Chitwan National Park",
+          "destination_latitude": 27.53,
+          "destination_longitude": 84.44,
+          "destination_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "travel_id": 1,
+          "transports": [
+            {
+              "cost": 1000
+            },
+            {
+              "cost": 850
+            },
+            {
+              "cost": 1200
+            }
+          ]
+        },
+        {
+          "type": "visit",
+          "time": "Morning",
+          "duration": "4 hours",
+          "place": "Chitwan National Park",
+          "place_id": "32",
+          "activity": "Jungle safari to observe wildlife",
+          "image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "activities": [
+            "Jungle Safari",
+            "Elephant Ride"
+          ],
+          "rating": 9,
+          "place_type": [
+            "Natural",
+            "Wildlife"
+          ],
+          "description": "Chitwan National Park, a UNESCO World Heritage Site in Nepal's Terai region, offers exceptional wildlife viewing opportunities.  Home to endangered species like the one-horned rhino, Bengal tiger, and Gharial crocodile, the park provides diverse activities such as jungle safaris, elephant rides, and canoeing.  Visitors can also experience the local Tharu culture.  It's an ideal destination for nature and adventure tourism."
+        },
+        {
+          "type": "break",
+          "time": "Afternoon",
+          "duration": "1 hour",
+          "activity": "Lunch",
+          "place_id": "32",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "bookings_id": 1
+        },
+        {
+          "type": "visit",
+          "time": "Afternoon",
+          "duration": "3 hours",
+          "place": "Chitwan Tharu Village",
+          "place_id": "33",
+          "activity": "Cultural tour",
+          "image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "activities": [
+            "Cultural Tours"
+          ],
+          "rating": 6,
+          "place_type": [
+            "Cultural"
+          ],
+          "description": "Chitwan Tharu Village, near Chitwan National Park, offers an immersive cultural experience focused on the indigenous Tharu people.  Visitors can explore traditional mud and thatch homes and learn about Tharu customs, rituals, and farming practices through cultural tours.  The village is also known for its vibrant folk dances and music.  This makes it an ideal destination for travelers interested in indigenous cultures and traditions."
+        },
+        {
+          "type": "break",
+          "time": "Evening",
+          "duration": "1 hour",
+          "activity": "Dinner",
+          "place_id": "32",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "bookings_id": 2
+        },
+        {
+          "type": "stay",
+          "time": "Night",
+          "place": "Chitwan National Park area",
+          "place_id": "32",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "stay_id": 1
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "title": "Bandipur and Tansen Exploration",
+      "schedule": [
+        {
+          "type": "travel",
+          "time": "Morning",
+          "duration": "5 hours",
+          "origin_id": "32",
+          "destination_id": "55",
+          "origin": "Chitwan National Park",
+          "origin_latitude": 27.53,
+          "origin_longitude": 84.44,
+          "origin_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "destination": "Bandipur",
+          "destination_latitude": 27.96,
+          "destination_longitude": 84.42,
+          "destination_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "travel_id": 2
+        },
+        {
+          "type": "visit",
+          "time": "Afternoon",
+          "duration": "4 hours",
+          "place": "Bandipur",
+          "place_id": "55",
+          "activity": "Explore Newari architecture and hike",
+          "image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "latitude": 27.96,
+          "longitude": 84.42,
+          "activities": [
+            "Exploring",
+            "Hiking"
+          ],
+          "rating": 6,
+          "place_type": [
+            "Cultural"
+          ],
+          "description": "Bandipur, a hilltop town in Nepal's Tanahun District, offers stunning Himalayan views, including the Annapurna and Dhaulagiri ranges.  Its preserved Newari architecture and cultural heritage are reflected in traditional buildings, temples, and pagodas lining the streets.  Visitors can enjoy hiking and exploring the surrounding countryside.  Bandipur provides a peaceful, culturally rich escape."
+        },
+        {
+          "type": "break",
+          "time": "Evening",
+          "duration": "1 hour",
+          "activity": "Dinner",
+          "place_id": "55",
+          "latitude": 27.96,
+          "longitude": 84.42,
+          "bookings_id": 3
+        },
+        {
+          "type": "travel",
+          "time": "Evening",
+          "duration": "2 hours",
+          "origin_id": "55",
+          "destination_id": "70",
+          "origin": "Bandipur",
+          "origin_latitude": 27.96,
+          "origin_longitude": 84.42,
+          "origin_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "destination": "Tansen",
+          "destination_latitude": 27.87,
+          "destination_longitude": 83.55,
+          "destination_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "travel_id": 3
+        },
+        {
+          "type": "stay",
+          "time": "Night",
+          "place": "Tansen",
+          "place_id": "70",
+          "latitude": 27.87,
+          "longitude": 83.55,
+          "stay_id": 2
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "title": "Tilaurakot and Chitwan",
+      "schedule": [
+        {
+          "type": "visit",
+          "time": "Morning",
+          "duration": "4 hours",
+          "place": "Lumbini (Tilaurakot)",
+          "place_id": "35",
+          "activity": "Explore Tilaurakot archaeological site",
+          "image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "latitude": 27.52,
+          "longitude": 83.47,
+          "activities": [
+            "Exploring",
+            "Historical Tours"
+          ],
+          "rating": 3,
+          "place_type": [
+            "Historic"
+          ],
+          "description": "Tilaurakot, near Lumbini, Nepal, is the believed capital of the ancient Shakya kingdom and the childhood home of Siddhartha Gautama (Buddha). This archaeological site features excavated palace ruins, stupas, and other structures offering insights into the Buddha's early life.  Visitors can explore these extensive ruins and experience the historical and spiritual significance of the location.  It's a key destination for those interested in Buddhist history and archaeology."
+        },
+        {
+          "type": "break",
+          "time": "Afternoon",
+          "duration": "1 hour",
+          "activity": "Lunch",
+          "place_id": "35",
+          "latitude": 27.52,
+          "longitude": 83.47,
+          "bookings_id": 4
+        },
+        {
+          "type": "travel",
+          "time": "Afternoon",
+          "duration": "5 hours",
+          "origin_id": "35",
+          "destination_id": "32",
+          "origin": "Tilaurakot",
+          "origin_latitude": 27.52,
+          "origin_longitude": 83.47,
+          "origin_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "destination": "Chitwan National Park",
+          "destination_latitude": 27.53,
+          "destination_longitude": 84.44,
+          "destination_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "travel_id": 4
+        },
+        {
+          "type": "visit",
+          "time": "Evening",
+          "duration": "2 hours",
+          "place": "Chitwan",
+          "place_id": "32",
+          "activity": "Relax and reflect",
+          "image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "activities": [
+            "Jungle Safari",
+            "Elephant Ride"
+          ],
+          "rating": 9,
+          "place_type": [
+            "Natural",
+            "Wildlife"
+          ],
+          "description": "Chitwan National Park, a UNESCO World Heritage Site in Nepal's Terai region, offers exceptional wildlife viewing opportunities.  Home to endangered species like the one-horned rhino, Bengal tiger, and Gharial crocodile, the park provides diverse activities such as jungle safaris, elephant rides, and canoeing.  Visitors can also experience the local Tharu culture.  It's an ideal destination for nature and adventure tourism."
+        },
+        {
+          "type": "break",
+          "time": "Evening",
+          "duration": "1 hour",
+          "activity": "Dinner",
+          "place_id": "32",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "bookings_id": 5
+        },
+        {
+          "type": "stay",
+          "time": "Night",
+          "place": "Chitwan",
+          "place_id": "32",
+          "latitude": 27.53,
+          "longitude": 84.44,
+          "stay_id": 3
+        },
+        {
+          "type": "travel",
+          "time": "Morning",
+          "duration": "3 hours",
+          "origin_id": "32",
+          "destination_id": "-1",
+          "origin": "Chitwan National Park",
+          "origin_latitude": 27.53,
+          "origin_longitude": 84.44,
+          "origin_image": "https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg",
+          "destination": "",
+          "destination_latitude": 27.7283893,
+          "destination_longitude": 84.3647199,
+          "destination_image": "",
+          "travel_id": 5
+        }
+      ]
+    }
+  ]
+}

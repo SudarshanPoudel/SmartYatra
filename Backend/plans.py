@@ -4,8 +4,8 @@ import json
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 
-from data import query_chunks
-from prompts import plan_generation_prompt, plan_edit_prompt
+from data import query_chunks, retrieve_place_details
+from prompts import plan_generation_prompt_1, plan_generation_prompt_2, plan_edit_prompt
 
 
 load_dotenv()
@@ -22,12 +22,10 @@ llm = ChatGoogleGenerativeAI(
 
 def response_into_dict(response):
     r = response.replace("```json\n", "").replace("```", "")
-    r = r.replace("'", '"')
-    try:
-        j = json.loads(r)
-        return j
-    except:
-        return response
+    j = json.loads(r)
+    print(j)
+    return j
+
 
 
 def generate_plan(
@@ -38,9 +36,9 @@ def generate_plan(
     priority_activities='',
     priority_places='',
     extra_desc='',
+    **kwargs
 ):
-    print("USer location is")
-    print(user_location)
+
 
     user_desc = f"I am going for {tour_type} tour from {user_location}. "
 
@@ -56,10 +54,10 @@ def generate_plan(
     if extra_desc:
         user_desc += extra_desc
 
-    similar_places = query_chunks(user_desc, no_of_days*3)
-    places_desc = "\n\n-----\n\n".join(similar_places)
+    similar_places = query_chunks(user_desc, no_of_days*5)
+    places_desc = "\n\n".join(similar_places)
 
-    prompt = plan_generation_prompt(
+    prompt = plan_generation_prompt_1(
         places_desc=places_desc,
         user_location=user_location,
         tour_type=tour_type,
@@ -69,16 +67,22 @@ def generate_plan(
         priority_place_types=priority_place_types
     )
 
-
-    response = llm.invoke(prompt)
-    return response_into_dict(response.content)
+    high_level_plan = llm.invoke(prompt)
+    print(high_level_plan)
+    prompt = plan_generation_prompt_2(
+        high_level_plan=high_level_plan
+    )
+    response=llm.invoke(prompt)
+    print(response.content)
+    response_dict = response_into_dict(response.content)
+    return response_dict
 
 
 def edit_plan(
     current_plan,
     user_edit_desc,
-    no_of_days,
 ):
+    no_of_days = len(current_plan['itinerary'])
     similar_places = query_chunks(user_edit_desc, no_of_days)
     places_desc = "\n\n-----\n\n".join(similar_places)
     prompt = plan_edit_prompt(

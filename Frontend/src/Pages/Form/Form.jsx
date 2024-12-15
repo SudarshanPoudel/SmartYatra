@@ -17,6 +17,7 @@ import bgImage from "../../Assets/Image/homepagebg.png"
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setformResponse } from "../../Redux/formResponseSlice";
+import { findClosestPlace } from "../../Components/FormComp/closestPath";
 
 export const Form = () => {
  
@@ -27,13 +28,15 @@ export const Form = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [budget, setBudget] = useState("");
   const [startLoc, setStartLoc] = useState("");
+  const [startLat, setStartLat] = useState("");
+  const [startLong, setStartLong] = useState("");
   const [currency, setCurrency] = useState("NPR");
   const [extra, setExtra] = useState("");
   const [places, setPlaces] = useState([]);
   const [placeTypes, setPlaceTypes] = useState([]);
   const [themes, setTheme] = useState([]);
   const [activities, setActivities] = useState([]);
-  const [accommodation, setAccommodation] = useState("");
+  const [transportation, setTransportation] = useState("");
   const [foods, setFoods] = useState("");
 
   // APi fetch
@@ -53,12 +56,17 @@ export const Form = () => {
   
     const formData = {
       user_location: startLoc,
+      user_lat: parseFloat(startLat),
+      user_long: parseFloat(startLong),
       tour_type: themes, // Ensure this field is populated correctly
       no_of_days: parseInt(day), // Convert to integer
       priority_place_types: placeTypes.join(','), // Convert array to comma-separated string
       priority_activities: activities.join(','), // Convert array to comma-separated string
       priority_places: places.join(','), // Convert array to comma-separated string
       extra_desc: extra || "", // Default to empty string if undefined
+      budget: parseInt(budget),
+      food_pref: foods || "",
+      travel_pref: transportation || ""
     };
     
     try {
@@ -84,13 +92,15 @@ export const Form = () => {
            setStartDate(new Date());
            setBudget("");
            setStartLoc("");
+           setStartLat("");
+           setStartLong("");
            setCurrency("NPR");
            setExtra("");
            setPlaces([]);
            setPlaceTypes([]);
            setTheme([]);
            setActivities([]);
-           setAccommodation("");
+           setTransportation("");
            setFoods("");
   };
 
@@ -100,6 +110,30 @@ export const Form = () => {
   const toggleCurrency = () => {
     setCurrency((prevCurrency) => (prevCurrency === "NPR" ? "USD" : "NPR"));
   };
+
+
+  const currentLocation =() =>{
+    setStartLoc("Fetching Live Location...")
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+          setStartLoc(findClosestPlace(latitude, longitude, allPlaces))
+          setStartLat(latitude)
+          setStartLong(longitude)
+        },
+        (error) => {
+          console.error("Error retrieving location:", error.message);
+          alert("Unable to retrieve location. Please check your permissions.");
+          setStartLoc("")
+        }
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+      setStartLoc("")
+    }
+  }
 
   return (
     <>
@@ -137,7 +171,7 @@ export const Form = () => {
           />
         </div>
 
-        <div className="text-input">
+        <div className="text-input location-input">
           <label htmlFor="">Location:</label>
           <input
             required
@@ -145,6 +179,13 @@ export const Form = () => {
             value={startLoc}
             onChange={(e) => setStartLoc(e.target.value)}
           />
+          <button
+              type="button"
+              className="location-use"
+              onClick={currentLocation}
+            >
+              Live
+            </button>
         </div>
         
         <div className="text-input smaller-box">
@@ -197,7 +238,7 @@ export const Form = () => {
       <SimpleOptionsSelector
         label_text="What is your preferred mode of transportation?"
         given_options={travel_options}
-        onOptionsChange={setAccommodation}
+        onOptionsChange={setTransportation}
       />
 
       <div className="text-input-extra">

@@ -44,6 +44,7 @@
     font-weight: 500;
     border-radius: 25px;
     cursor: pointer;
+    position: absolute;
 }
 
 
