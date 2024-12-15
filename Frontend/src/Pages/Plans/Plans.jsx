@@ -4,10 +4,11 @@ import { Itinerary } from '../../Components/PlansComp/Itinerary'
 import './Plans.css'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-
+import MapView from '../../Components/PlansComp/MapView'
 export const Plans = () => {
 
   const formResponse = useSelector(state => state.formResponseData.responseData);
+  console.log(formResponse)
   const navigate = useNavigate()
 
   return (
@@ -16,6 +17,7 @@ export const Plans = () => {
          formResponse.length < 1 ?
          <div className='noPlan'>
            <h1>No plan yet</h1>
+           <MapView />
            <p onClick={()=>navigate('/form')}>Fill the form</p>
          </div>
          :

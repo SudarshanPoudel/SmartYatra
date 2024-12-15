@@ -1,14 +1,16 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import pandas as pd
 
 from plans import generate_plan, edit_plan
+from plan_details import expand_plan_with_details
 from data import retrieve_place_details, retrieve_all_places, store_chunks, delete_chunk
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-
+app.state.plan_data = None
+app.state.latest_plan = None
 
 origins = ["*"]
 
@@ -20,20 +22,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+#Basic user info
+global user_lat
+global user_long 
+
 # Pydantic model to handle the incoming request body
 class TourPlanRequest(BaseModel):
     user_location: str
+    user_lat: float
+    user_long: float
     tour_type: str
     no_of_days: int
     priority_place_types:str = ''
     priority_activities:str = ''
     priority_places:str = ''
     extra_desc:str = ''
+    food_pref:str='non-veg'
+    travel_pref:str='private'
+    budget:int
 
 class TourEditRequest(BaseModel):
-    current_plan: str
     user_edit_desc: str
-    no_of_days: int
 
 class PlaceAddRequest(BaseModel):
     name:str
@@ -51,17 +60,18 @@ class PlaceAddRequest(BaseModel):
 # POST endpoint to generate a tour plan
 @app.post("/generate-plan")
 def generate_trip_plan(request: TourPlanRequest):
-    print("HEHEHEHEHEH")
     params = request.model_dump()
-    print(params)
+    app.state.plan_data = params
     plan = generate_plan(**params)
-    return JSONResponse(content=plan)
+    app.state.latest_plan = plan
+    detailed_plan = expand_plan_with_details(plan, params['budget'], params['food_pref'], params['travel_pref'])
+    return JSONResponse(content=detailed_plan)
 
 # POST endpoint to edit a tour plan
 @app.post("/edit-plan")
 def edit_trip_plan(request: TourEditRequest):
     params = request.model_dump()
-    plan = edit_plan(**params)
+    plan = edit_plan(current_plan=app.state.latest_plan, **params)
     return JSONResponse(content=plan)
 
 # POST endpoint to add place
@@ -104,3 +114,7 @@ def activities():
     data = pd.read_csv('data/place_types.csv')
     data.fillna('None', inplace=True)
     return JSONResponse(content=data.to_dict('records'))
+
+def get_plan_data():
+    return app.state.plan_data
+

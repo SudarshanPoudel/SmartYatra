@@ -98,13 +98,17 @@ form{
     z-index: 999 !important;
 }
 
-.budget-input {
+.budget-input, .location-input {
     display: flex;
     justify-content: space-between;
     position: relative;
 }
 
-.currency-toggle {
+.budget-input input, .location-input input{
+    padding-right: 55px;
+}
+
+.currency-toggle, .location-use {
     position: absolute;
     right: 5px;
     top: 50%;
