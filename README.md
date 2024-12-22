@@ -81,8 +81,15 @@ frontend/
    ```
 4. Set up environment variables:
    - Create a `.env` file in the `backend/` directory.
-   - Add necessary keys (e.g., API keys for AI services).
+   - Add gemini api key as:
+   ```bash
+   GEMINI_API_KEY=<your-gemini-api-key>
+   ```
 
+5. Run `initialize_data.py` file to initialize database with initial data in csv file.
+      ```bash
+      python initialize_data.py
+      ```
 5. Run the backend server:
    ```bash
    uvicorn app:app --reload
