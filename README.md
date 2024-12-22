@@ -63,7 +63,6 @@ frontend/
 - Python 3.8+
 - Node.js 16+
 - npm or yarn
-- Docker (optional, for database persistence)
 
 ### Backend Setup
 1. Clone the repository:
@@ -104,9 +103,3 @@ frontend/
    npm run dev
    ```
    The frontend will be available at `http://localhost:5173`.
-
----
-
-## Additional Notes
-- **Database**: Ensure ChromaDB is set up before running the backend. The database directory (`chromadb/`) is ignored in Git.
-- **Testing**: Use `test.ipynb` for debugging backend components. This file is also ignored in Git.
