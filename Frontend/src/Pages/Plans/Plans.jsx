@@ -22,14 +22,14 @@ export const Plans = () => {
          </div>
          :
          <div className='plans-page'>
-            <div className="banner">
-               <div className="banner-image">
-                   <img src="https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg" />
-               </div>
-               <h2 className="banner-text">'{formResponse.trip_title}'</h2>
-            </div>
-            <Itinerary />
+         <div className="banner">
+         <div className="banner-image">
+           <img src="https://mountainroutes.com/wp-content/uploads/2022/07/KTM-Durbar-Square.jpg" />
          </div>
+         <h2 className="banner-text">'{formResponse.trip_title}'</h2>
+       </div>
+       <Itinerary />
+    </div>
    }
     </>
   )

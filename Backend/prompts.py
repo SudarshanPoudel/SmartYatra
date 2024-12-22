@@ -1,4 +1,4 @@
-PLAN_GENERATION_PROMPT_1 = """
+PLAN_GENERATION_PROMPT = """
 Your task is to create a {no_of_days}-days trip plan starting from {user_location}. The trip is categorized as a {tour_type} tour.  
 
 ### Guidelines:
@@ -10,15 +10,14 @@ Your task is to create a {no_of_days}-days trip plan starting from {user_locatio
    
 
 2. **Itinerary Creation**:  
-  - Distribute the chosen places evenly across the trip’s days.
-  - Always begin the itinerary from {user_location}.
+  - Distribute the chosen places evenly across the trip’s days, each day user should spend 10-16 hours exploring and traveling. 
+  - Make sure to minimize travel distance by putting places near each other in one go.
+  - If first place that needs to be visited is 'Place A', very first task of day 1 should be to travel from {user_location}(ID=-1) to 'place A'.
   - Ensure the last day ends at the original starting point, {user_location}.
-  
 
 3. **Descriptions and Details**:  
    - For each place, include its `place_id`, location, and a short description (1–2 sentences) about what the user should do there.  
    - The descriptions should provide clear, actionable tasks or highlights, e.g., "Explore the ancient temple and enjoy its stunning architecture."  
-
 
 4. **Output Format**:  
    - Provide the output strictly in Markdown format without any comments, explanations, or apologies.  
@@ -33,7 +32,7 @@ Your task is to create a {no_of_days}-days trip plan starting from {user_locatio
 ---
 
 ### **Output Format**  
-```markdown
+```
 ## Example Output:  
 ### Day 1:
 - **Place Name 1** (ID = `place_id_1`):  
@@ -45,6 +44,7 @@ Your task is to create a {no_of_days}-days trip plan starting from {user_locatio
   - Location: `Location of place 2`
   - Duration: 1.5 Hours  
   - Task: Walk through the vibrant market and experience local culture.  
+.....
 
 ### Day 2:
 - **Place Name 3** (ID = `place_id_3`):  
@@ -55,11 +55,13 @@ Your task is to create a {no_of_days}-days trip plan starting from {user_locatio
 - **Place Name 4** (ID = `place_id_4`):  
   - Location: `Location of place 4`
   - Duration: 3 Hours  
-  - Task: Visit the museum to learn about the region’s history and culture.  
+  - Task: Visit the museum to learn about the region’s history and culture. 
+..... 
+```
 """
 
 
-PLAN_GENERATION_PROMPT_2 = """
+PLAN_VALIDATION_PROMPT = """
 Your task is to create a detailed trip itinerary based on the provided high-level plan.  
 
 ### Guidelines:  
@@ -68,12 +70,12 @@ Your task is to create a detailed trip itinerary based on the provided high-leve
    - Ensure the schedule for each day makes full use of available time (Morning, Afternoon, Evening, Night).  
 
 2. **Place Restrictions**:
-   - Only use places provided in the high-level plan for visits, meals, and stays.  
+   - Only use places provided in the high-level plan for visits, meals, and stays, make no assumption about place id,  inited give -1 to unavailable id.  
    - Trip should strictly start from {user_location}(id = `-1`) and end at initial place back. 
+   - If first place that needs to be visited is 'Place A', very first task of day 1 should be to travel from {user_location}(ID=-1) to 'place A'.
 
 3. **Realistic Itinerary**:
    - Distribute activities sensibly across the day without overcrowding.  
-   - Avoid repetitive visits to the same place unless explicitly mentioned in the high-level plan.  
    - Ensure there is sufficient time for rest and transitions between activities. Duration of visit or travel per day should be more than 8 hours and less than 14 hours per day.
 
 4. **Formatting Requirements**:
@@ -131,7 +133,6 @@ Your task is to create a detailed trip itinerary based on the provided high-leve
 }
 """
 
-
 PLAN_EDIT_PROMPT = """
 Your task is to update the user's {no_of_days}-day trip plan based on their new instructions. Follow these guidelines:
 
@@ -152,37 +153,48 @@ Your task is to update the user's {no_of_days}-day trip plan based on their new 
 {user_edit_desc}
 
 **Extra Places (for reference):**  
-The following places can be used if adjustments are needed. Each includes a name, location, description, and other details:  
+The following places can be used if adjustments are needed. Each includes a name, location, and id:  
 {places_desc}
 
 **Output Format:**  
 Provide the updated plan in JSON format as follows, generate no other text like apologies or changes you made.
+---
+
+### **Output JSON Format**:  
 ```json
 {
-  "trip_title": "Title of the whole trip", // e.g 5 Days Kathmandu - Janakpur Exploration
+  "trip_title": "Title of the whole trip", // e.g., 5 Days Kathmandu - Janakpur Exploration
   "itinerary": [
     {
       "day": 1,
-      "title": "Day's Title",
+      "title": "Day's Title", // e.g., "Exploring Kathmandu"
       "schedule": [
         {
-          "type": "visit",  // Options: visit, break, or travel
-          "time": "Morning", // Options: Morning, Afternoon, Evening, All day
-          "duration": "3 hours",
+          "type": "visit", // Options: visit, break, travel, stay
+          "time": "Morning", // Options: Morning, Afternoon, Evening, Night, All day
+          "duration": 3, // In hours
           "place": "Place Name",
-          "place_id": Place_id
+          "place_id": Place_id,
+          "activity": "Activity to do in that place" // e.g., "Explore the temple and enjoy the local culture"
         },
         {
           "type": "break",
-          "activity": "Lunch",
-          "duration": "1 hour"
+          "activity": "Lunch", // e.g., "Lunch at a local restaurant"
+          "duration": 1, 
+          "place_id": "Place ID of the lunch spot"
         },
         {
           "type": "travel",
-          "time": "Afternoon Evening",
-          "duration": "7 hours",
-          "origin": "Current Place",
-          "destination": "Destination Place"
+          "time": "Afternoon Evening", // Indicate the travel time slot
+          "duration": 7,
+          "origin_id": "Place ID of the starting point",
+          "destination_id": "Place ID of the destination"
+        },
+        {
+          "type": "stay",
+          "time": "Night",
+          "place": "Place Name", // Name of the stay location
+          "place_id": "Place ID of the stay location"
         }
       ]
     }
@@ -191,36 +203,29 @@ Provide the updated plan in JSON format as follows, generate no other text like 
 """
 
 
-
-def plan_generation_prompt_1(
+def plan_generation_prompt(
         places_desc,
-        user_location='Kathmandu', 
-        tour_type='Adventure', 
-        no_of_days=3, 
-        priority_places='',
-        priority_activities='',
-        priority_place_types=''
+        user_location, 
+        tour_type, 
+        no_of_days, 
+        priority_places='{No specific places maintained}',
+        priority_activities='{No specific activities maintained}',
+        priority_place_types='{No specific place types maintained}'
   ):
-    prompt = PLAN_GENERATION_PROMPT_1.replace("{no_of_days}", str(no_of_days))
+    prompt = PLAN_GENERATION_PROMPT.replace("{no_of_days}", str(no_of_days))
     prompt = prompt.replace("{user_location}", str(user_location))
     prompt = prompt.replace("{tour_type}", str(tour_type))
     prompt = prompt.replace("{places_desc}", str(places_desc))
-
-
-    if priority_places:
-        prompt = prompt.replace("{places}", str(priority_places))
-    if priority_activities:
-        prompt = prompt.replace("{activities}", priority_activities)
-    if priority_place_types:
-        prompt = prompt.replace("{place_type}", priority_place_types)
-
+    prompt = prompt.replace("{places}", str(priority_places))
+    prompt = prompt.replace("{activities}", priority_activities)
+    prompt = prompt.replace("{place_type}", priority_place_types)
     return prompt
 
 
-def plan_generation_prompt_2(high_level_plan):
-    prompt = PLAN_GENERATION_PROMPT_2.replace("{high_level_plan}", str(high_level_plan))
+def plan_validation_prompt(user_location, high_level_plan):
+    prompt = PLAN_VALIDATION_PROMPT.replace("{high_level_plan}", str(high_level_plan))
+    prompt = prompt.replace("{user_location}", str(user_location))
     return prompt
-
 
 def plan_edit_prompt(
     no_of_days,

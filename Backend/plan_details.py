@@ -1,189 +1,122 @@
 import random
 from data import retrieve_place_details
+import pandas as pd
 
-# data
-# Vegetarian Khaja Sets
-veg_khaja_sets = [
-    {"name": "Newari Veg Khaja Set", "cost": 350},
-    {"name": "Puri Tarkari Set", "cost": 250},
-    {"name": "Aalu Nimki Set", "cost": 180},
-    {"name": "Vegetarian Thali", "cost": 300},
-    {"name": "Chana Masala Thali", "cost": 280},
-    {"name": "Vegetable Pakora Set", "cost": 150},
-    {"name": "Momo Veg Set", "cost": 250},
-    {"name": "Vegetable Fried Rice Set", "cost": 220},
-    {"name": "Chole Bhature Set", "cost": 290},
-    {"name": "Veg Roll Set", "cost": 200},
-    {"name": "Daal Bhat Veg Set", "cost": 270}
-]
+# Fetch required data
+food_data=pd.read_csv('data/khaja_sets.csv')
+non_veg_khaja_sets = food_data[food_data['food_pref'] == 'Non-Veg'].to_dict('records')
+veg_khaja_sets = food_data[food_data['food_pref'] == 'Veg'].to_dict('records')
+cafe_data = pd.read_csv('data/cafe.csv').to_dict('records')
+hotels = pd.read_csv('data/hotels.csv').to_dict('records')
+transportation = pd.read_csv('data/transportation.csv').to_dict("records")
 
-# Non-Vegetarian Khaja Sets
-non_veg_khaja_sets = [
-    {"name": "Newari Non-Veg Khaja Set", "cost": 450},
-    {"name": "Meat Puri Tarkari Set", "cost": 350},
-    {"name": "Rice and Chicken Curry Set", "cost": 400},
-    {"name": "Chatpate Sukuti Set", "cost": 350},
-    {"name": "Mutton Sekuwa Set", "cost": 500},
-    {"name": "Chicken Momo Set", "cost": 300},
-    {"name": "Beef Bhutuwa Set", "cost": 420},
-    {"name": "Pork Curry Set", "cost": 450},
-    {"name": "Chicken Fried Rice Set", "cost": 320},
-    {"name": "Fish Curry Set", "cost": 380},
-    {"name": "Egg Curry Set", "cost": 230}
-]
 
-# Example cafe names (you can add more as needed)
-cafe_names = [
-    "Sundar Cafe", "Himalaya Bistro", "Everest Lounge", "Garden Delights", "Sunrise Cafe",
-    "The Green Leaf", "Pahadi Cafe", "Mountain View Cafe", "Kaffe Nirvana", "The Rustic Spoon",
-    "Royal Taste", "Nepal Coffee House", "Chai Sathi", "The Aroma", "The Cozy Corner",
-    "Taste of Kathmandu", "Momo House", "Spice Garden", "Heritage Cafe", "Bistro Bliss",
-    "The Himalayan Delight", "The Local Eatery", "Café Shanti", "Cafe Nirvana", "The Serene Spoon",
-    "Nepali Bites", "Urban Palate", "Café Kathmandu", "Tranquil Tastes", "Chiya Ghar"
-]
-
-hotel_names = [
-    # Budget Tier
-    "Budget Inn",
-    "Simple Stay",
-    "Economy Lodge",
-    "Urban Budget Hotel",
-    "Easy Rest Hotel",
-    "City View Inn",
-    "Traveler's Spot",
-    "Himalayan Stay",
-    "Heritage Guesthouse",
-    "Valley Lodge",
-    
-    # Mid-Range Tier
-    "Comfort Stay",
-    "Green View Hotel",
-    "City Escape",
-    "Mountain Retreat",
-    "Royal Comforts",
-    "Elite Stay",
-    "Luxury Nest",
-    "The Serenity Hotel",
-    "Skyline View Hotel",
-    "Majestic Retreat",
-    "Himalayan Horizon",
-    "Blue Sky Inn",
-    "Tranquil Heights",
-    "Lakeside Inn",
-    "Vista Lodge",
-    "Urban Comfort",
-    "Nepal's Nest",
-    "Everest Base Stay",
-    "Kathmandu Kottage",
-    "Peaceful Abode",
-
-    # Premium Tier
-    "Platinum Stay",
-    "Infinity Hotel",
-    "Diamond Resort",
-    "Grand Royale",
-    "The Royal Crown",
-    "Golden Peak Hotel",
-    "Luxury Valley Retreat",
-    "Sky High Resort",
-    "Ethereal Suites",
-    "Paradise Heights",
-]
-
-def generate_food_options(budget, food_pref, lat, long):
+def generate_food_options(budget, food_pref):
     foods = []
-    for _ in range(3):  # Generate 3 food options
-        food_item = random.choice(non_veg_khaja_sets if food_pref == 'Non-Vegetarian' else veg_khaja_sets)
-        hotel_name = random.choice(cafe_names)
-        rating = round(random.uniform(3.5, 4.5), 1)  # Generate rating between 3.5 to 4.5
+    food_item = random.choice(non_veg_khaja_sets if food_pref == 'Non-Vegetarian' else veg_khaja_sets)
 
-        # Adjust the location slightly to simulate nearby hotels
-        adjusted_lat = round(lat + random.uniform(-0.005, 0.005), 6)
-        adjusted_long = round(long + random.uniform(-0.005, 0.005), 6)
+    cafe_price_list = []
 
+    for cafe in cafe_data:
+        final_cost = food_item['cost'] * cafe['price_factor']
+        cafe_price_list.append({
+            "name": cafe['name'],
+            "rating": cafe['rating'],
+            "price": round(final_cost, 2),
+            "price_factor": cafe['price_factor']
+        })
+
+    cafe_price_list.sort(key=lambda x: abs(x['price'] - budget))
+
+    closest_cafes = cafe_price_list[:10]
+
+    selected_cafes = random.sample(closest_cafes, 3)
+
+    for cafe in selected_cafes:
         foods.append(
             {
-                "food": food_item['name'],
-                "rating": rating,
-                "cost": food_item['cost'],
-                "hotel": {
-                    "name": hotel_name,
-                    "lat": adjusted_lat,
-                    "long": adjusted_long
-                }
+                "title": food_item['name'],
+                "sub_title": f"At {cafe['name']}",
+                "cost": f"Rs. {cafe['price']}",
+                "rating": cafe['rating'],
+                "image": food_item['image'],
             }
         )
 
     return foods
 
-# Helper function to divide travel cost based on duration
-def generate_travel_options(hours_ratio, budget, travel_pref):
-    options_public = ['Public Bus', 'Deluxe Bus', 'Micro', 'Jeep', 'Tourist Only Bus']
-    options_private = ['Car (Rental)', 'Taxi', 'Bike (Rental)', 'Jeep (Rental)']
-    result =[]
-    factor = [1, 0.9, 1.2]
-    for f in factor:
+
+
+def generate_travel_options(hours, path, budget, travel_pref):
+    filtered_options = [option for option in transportation if option['type'] == ('Private' if travel_pref == 'Private' else 'Public')]
+    
+    for option in filtered_options:
+        option['cost_diff'] = abs(option['cost'] - budget)
+    
+    closest_options = sorted(filtered_options, key=lambda x: x['cost_diff'])[:3]
+    
+    result = []
+    for option in closest_options:
         result.append({
-            'type': random.choice(options_private) if travel_pref == 'Private' else random.choice(options_public),
-            'cost': round(budget * hours_ratio * f/20)*20,
-            'rating': round(random.uniform(35, 45) * f) / 10
+            'title': option['name'],
+            'sub_title': path,
+            'cost': f"Rs. {option['cost'] * hours}",
+            'rating': round(random.uniform(3.8, 4.9),2),
+            'image': option['image']
         })
+
     return result
-        
 
 
-def generate_ratings_based_on_budget(budget, tiers=[700, 2000]):
-    if budget < tiers[0]:
-        return round(random.uniform(3.5, 4.0), 1)
-    elif budget <= tiers[1]:
-        return round(random.uniform(4.0, 4.5), 1)
+
+def generate_hotel_data(budget):
+    # Ensure the budget is within the allowed range
+    if budget < 700:
+        budget = 700
+    elif budget > 15000:
+        budget = 15000
+    
+    if budget <= 1500:
+        tier = 'Budget'
+        rating = round(random.uniform(3.6, 4.0), 2)
+    elif budget <= 5000:
+        rating = round(random.uniform(4.1, 4.4), 2)
+        tier = 'Mid-Range'
     else:
-        return round(random.uniform(4.5, 5.0), 1)
+        tier = 'Premium'
+        rating = round(random.uniform(4.5, 5.0), 2)
 
-def generate_hotel_data(budget, lat, long):
-    if budget < 500:
-        budget = 500
-    elif budget > 10000:
-        budget = 10000
-
-    if budget < 1000:
-        hotels = hotel_names[0:10]
-    elif budget < 3000:
-        hotels = hotel_names[10:30]
-    else:
-        hotels = hotel_names[30:]
+    # Filter hotels by tier
+    filtered_hotels = [hotel for hotel in hotels if hotel['tier'] == tier]
 
     result = []
-    for _ in range(3):
-        cost = round((budget + random.uniform(-100, 100))/20)*20
-        rating = generate_ratings_based_on_budget(cost, [700, 2000])
-        
-        adjusted_lat = round(lat + random.uniform(-0.005, 0.005), 6)
-        adjusted_long = round(long + random.uniform(-0.005, 0.005), 6)
+    
+    # Pick 3 distinct hotels for selection
+    selected_hotels = random.sample(filtered_hotels, 3)  # Ensures 3 different hotels
 
+    for selected_hotel in selected_hotels:
+        # Adjust the cost based on the provided budget
+        cost = round(budget + random.uniform(-200, 200), -2)  # Random cost adjustment
         result.append(
             {
-                "hotel": random.choice(hotels),
+                "title": selected_hotel['hotel_name'],
+                "sub_title": f"{selected_hotel['tier']} hotel",
+                "cost": f"Rs. {cost}",
                 "rating": rating,
-                "cost": cost,
-                "location": {
-                    "lat": adjusted_lat,
-                    "long": adjusted_long
-                }
+                "image": selected_hotel['image']
             }
         )
-
     return result
 
 
-def expand_plan_with_details(plan, budget, food_pref, travel_pref):
+def expand_plan_with_details(plan, budget, food_pref, travel_pref, **kwargs):
     # Iterate over the itinerary
     total_travel_hours=0
     no_of_days = len(plan['itinerary'])
     for day in plan['itinerary']:
         for schedule in day['schedule']:
             if schedule['type'] == 'travel':
-                duration = schedule.get('duration', '0 hours')
+                duration = schedule.get('duration', 0)
                 hours = duration  
                 total_travel_hours += hours
 
@@ -193,13 +126,12 @@ def expand_plan_with_details(plan, budget, food_pref, travel_pref):
                 place_info = retrieve_place_details(schedule['place_id'])
                 if place_info:
                     schedule.update({
-                        'image': place_info['image'],
-                        'latitude': place_info['latitude'],
-                        'longitude': place_info['longitude'],
+                        'latlong': place_info['latlong'],
                         'activities': place_info['activities'].split(', '),
                         'rating': place_info['rating'],
                         'place_type': place_info['type'].split(', '),
                         'description': place_info['description'],
+                        'image': place_info['image']
                     })
 
             elif schedule['type'] == 'travel':
@@ -208,47 +140,29 @@ def expand_plan_with_details(plan, budget, food_pref, travel_pref):
                 destination_details = retrieve_place_details(schedule['destination_id'])
                 if origin_details:
                     schedule['origin'] = origin_details['name']
-                    schedule['origin_latitude'] = origin_details['latitude']
-                    schedule['origin_longitude'] = origin_details['longitude']
-                    schedule['origin_image'] = origin_details['image']
+                    schedule['origin_latlong'] = origin_details['latlong']
                 if destination_details:
                     schedule['destination'] = destination_details['name']
-                    schedule['destination_latitude'] = destination_details['latitude']
-                    schedule['destination_longitude'] = destination_details['longitude']
-                    schedule['destination_image'] = destination_details['image']
+                    schedule['destination_latlong'] = destination_details['latlong']
+                hours_ratio = float(schedule['duration']/total_travel_hours)
                 schedule['transport'] = generate_travel_options(
-                    hours_ratio = schedule['duration']/total_travel_hours,
-                    budget=budget*0.4 if travel_pref == 'private' else budget*0.3,
-                    travel_pref=travel_pref
+                    path=f"From {schedule['origin']} to {schedule['destination']}",
+                    budget=budget*0.35*hours_ratio if travel_pref == 'private' else budget*0.15*hours_ratio,
+                    travel_pref=travel_pref,
+                    hours=schedule['duration']
                 )
 
             elif  schedule['type'] == 'stay':
                 place_details = retrieve_place_details(schedule['place_id'])
-                if place_details:
-                    place_info = place_details
-                    schedule.update({
-                        'latitude': place_info['latitude'],
-                        'longitude': place_info['longitude']
-                    })
                 schedule['bookings'] = generate_hotel_data(
                     budget = budget * 0.4 / no_of_days,
-                    lat= place_info['latitude'],
-                    long= place_info['longitude']
                 )
 
             else:
                 place_details = retrieve_place_details(schedule['place_id'])
-                if place_details:
-                    place_info = place_details
-                    schedule.update({
-                        'latitude': place_info['latitude'],
-                        'longitude': place_info['longitude']
-                    })
                 schedule['food_options'] = generate_food_options(
-                    budget= budget * 0.2 / no_of_days,
+                    budget=budget*0.45/no_of_days if travel_pref == 'private' else budget*0.65/no_of_days,
                     food_pref=food_pref,
-                    lat= place_info['latitude'],
-                    long= place_info['longitude']
                 )
                 
     return plan

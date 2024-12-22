@@ -1,6 +1,8 @@
+# script to connect python with chromadb database
+
 import os
 from dotenv import load_dotenv
-
+import random
 from langchain_core.documents import Document
 from langchain_chroma import Chroma
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -12,14 +14,12 @@ gemini_api = os.environ['GEMINI_API_KEY']
 DEFAULT_COLLECTION_NAME = 'all_places'
 embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001", google_api_key=gemini_api)
 
-
 # Function to generate detailed desc of any place
-def detailed_desc(place_id, name, desc, location, lon, lat, place_type, activities, time):
-    return f'''# {name} (id = {place_id}):
-    **Location**: {location}, Longitude:{lon}, Latitude: {lat}.
-    **General Description**: {name} is a {place_type} place where we can do {activities} and takes around {time} hr. on average to explore.
-    **About**: {desc}'''
-
+def detailed_desc(id, name, location, latlong, type, activities,required_time, description, **kwargs):
+    return f'''# {name} (id = {id}):
+    **Location**: {location} ({latlong}).
+    **General Description**: {name} is a {type} place where we can do {activities} and takes around {required_time} hr. on average to explore.
+    **About**: {description}'''
 
 # Initialize Chroma vector store
 def initialize_chroma_client():
@@ -29,7 +29,7 @@ def initialize_chroma_client():
         persist_directory="./chroma_db"
     )
 
-
+# Get new available id for chroma
 def get_available_id():
     collection = initialize_chroma_client()
     existing_ids = collection.get(ids=None)['ids']  
@@ -39,24 +39,23 @@ def get_available_id():
     else:
         return 1
 
-# Store text chunks in Chroma vector store, replacing existing data if any
-def store_chunks(data):
+# Store place data in Chroma vector store
+def store_place(data):
     collection = initialize_chroma_client()
     metadata = {key: value for key, value in data.items() if key != 'description_llm'}
     uuid = data.get('id', get_available_id())
     data['id'] = uuid
     if 'description_llm' not in data:
         data['description_llm'] = detailed_desc(
-            place_id=uuid,
+            id=uuid,
             name=data['name'],
-            desc=data['desc'],
             location=data['location'],
-            lon=data['lon'],
-            lat=data['lat'],
-            place_type=data['type'],
+            latlong=data['latlong'],
+            type=data['type'],
             activities=data['activities'],
-            time=data['required_time']
-        )
+            required_time=data['required_time'],
+            description=data['description'],
+            )
 
     # Create a document with embedding and metadata
     document = Document(
@@ -64,28 +63,31 @@ def store_chunks(data):
         metadata=metadata,
         persist_directory="./chroma_db",
     )
-
           
     # Add document to the collection
     collection.add_documents(documents=[document], ids=[str(uuid)])
     return uuid
 
-
-def delete_chunk(id):
+# Function to delete place 
+def delete_place(id):
     collection = initialize_chroma_client()
-    if collection.get(ids=[str(id)])['metadatas']:
-        print(collection.get(ids=[str(id)]))
+    place = collection.get(ids=[str(id)])['metadatas']
+    if place:
         collection.delete(ids=[str(id)])
-        return True
+        return place
     else:
         return False
 
 
-# Retrieve top_n chunks similar to a query
-def query_chunks(query: str, top_n: int = 10) -> list:
+# Retrieve top_n places similar to a query
+def query_place(query: str, top_n: int = 10, only_name=False) -> list:
     collection = initialize_chroma_client()
     results = collection.similarity_search(query, k=top_n)
-    content = [r.page_content for r in results]
+    if only_name:
+        content = [f"{r.metadata.get('name', 'Unknown')} (ID={r.metadata.get('id', -1)})\nLocation=({r.metadata.get('location', 'Search it yourself')})" for r in results]
+    else:
+        content = [r.page_content for r in results]
+        
     return content
 
 
@@ -96,15 +98,13 @@ def retrieve_place_details(place_id:int)->dict:
             from app import get_plan_data
             plan_data = get_plan_data()
             return {'id': -1,
-                'latitude': plan_data['user_lat'],
-                'longitude': plan_data['user_long'],
+                'latlong': f"{plan_data['user_lat']},{plan_data['user_long']}",
                 "name": "",
                 "image": ""
                 }
         except:
             return {'id': -1,
-                'latitude': 0.0,
-                'longitude': 0.0,
+                'latlong': "0.0, 0.0",
                 "name": "",
                 "image": ""
                 }
@@ -116,7 +116,9 @@ def retrieve_place_details(place_id:int)->dict:
         return None
 
 # Retrieve information of all places
-def retrieve_all_places()->dict:
+def retrieve_all_places() -> dict:
     collection = initialize_chroma_client()
     all_data = collection.get()
-    return all_data['metadatas']
+    places = all_data['metadatas']
+    random.shuffle(places)
+    return places

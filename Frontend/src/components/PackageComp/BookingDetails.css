@@ -1,0 +1,19 @@
+.booking-details-container{
+    background-color: var(--iter-bg-1);
+    height: 97vh;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 30px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.booking-details-container h1{
+    color: var(--bg-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-bottom: 4px solid var(--primary-color);
+    padding: 0 10px;
+}

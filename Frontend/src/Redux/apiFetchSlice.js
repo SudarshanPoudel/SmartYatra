@@ -27,7 +27,6 @@ const initialState = {
   error: null,
 }
 
-
 // Creating Slices
 const apiFetchSlice = createSlice({
   name: 'apiFetch',

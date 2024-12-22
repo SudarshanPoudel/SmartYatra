@@ -1,0 +1,18 @@
+.feature-comp{
+    padding: 2vh 5vw;
+    background: var(--bg-color);
+}
+
+.feature-comp .item-title, .feature-comp .item-title span{
+    text-align: left;
+    padding-left: 2rem;
+    font-weight: 600;
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin: 20px 6px;
+}
+
+.title span{
+    border-bottom: 4px solid var(--text-color);
+    padding: 0 6px;
+}

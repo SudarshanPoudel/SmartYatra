@@ -1,52 +1,42 @@
 :root {
-  --primary-color: #ff4800;
+  --primary-color: #f95738;
   --primary-color-hover: #dd3f00;
-  --text-color: #fce5e5;
+  --text-color: #dfdfdf;
+  --text-color-invert: #000000;
   --bg-color: #191716;
-  --bg-color-sec: #2d2d2d;
+  --bg-color-less-visible: #191716f6;
+  --bg-color-sec: #262626;
   --bg-color-ter: #585858;
-  --star-color: #FDC107;
+  --star-color: #fdc107;
   --nav-color: #cfcfcf;
-  --iter-bg-1: #f6f6f6;
-  --iter-bg-2: #ffffff;
+  --iter-bg-1: #fff;
+  --iter-bg-2: #f7f7f7;
+  --iter-bg-3: #e3e3e3;
 }
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", serif;
+  font-family: 'Poppins', serif;
   font-weight: 400;
   color: var(--text-color);
   transition: 0.2s ease-in-out;
-  outline:none;
+  outline: none;
   text-underline-offset: 0.4rem;
   scroll-behavior: smooth;
 }
 
-body{
-  width: 100vw;
-  overflow-x: hidden;
-}
-
-
 button{
-  border: none;
-}  
-
-/* Disable arrow of input number */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  border: 0;
 }
 
-input[type=number] {
-  -moz-appearance: textfield;
+::-moz-selection { /* Code for Firefox */
+  color: var(--text-color);
+  background: var(--primary-color);
 }
 
-a{
-  font-weight: inherit;
-  font-size: inherit;
-  color: inherit;
+::selection {
+  color: var(--text-color);
+  background: var(--primary-color);
 }

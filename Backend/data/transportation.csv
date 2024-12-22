@@ -1,0 +1,10 @@
+name,type,cost,image
+Public Bus,Public,150,t1.jpg
+Deluxe Bus,Public,250,t2.jpeg
+Micro,Public,200,t3.webp
+Jeep,Public,400,t4.jpg
+Tourist Only Bus,Public,500,t5.jpg
+Car (Rental),Private,1000,t6.jpg
+Taxi,Private,700,t7.jpg
+Bike (Rental),Private,400,t8.jpg
+Jeep (Rental),Private,1700,t9.png

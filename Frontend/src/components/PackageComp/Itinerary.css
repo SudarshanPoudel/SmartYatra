@@ -1,0 +1,25 @@
+.itinerary-container{
+    display: flex;
+    position: relative;
+    width: 96vw;
+    gap: 10px;
+    background-color: var(--bg-color);
+}
+
+.itinerary-container .itinerary{
+    margin: 0 3vw;
+    width: 50%;
+}
+
+.itinerary-container .details{
+    position: -webkit-sticky; 
+    position: sticky;
+    height: 97vh;
+    width: 50%;
+    right: 0;
+    top: 1vh;
+    bottom: 0;
+    overflow: hidden;
+    margin: 3vh 0;
+    border-radius: 10px;
+}

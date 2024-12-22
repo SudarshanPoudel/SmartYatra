@@ -1,7 +1,7 @@
 id,name,image
-type1,Historic,https://www.landnepal.com/wp-content/uploads/2021/06/Gorkha_LN.jpg
-type2,Religious,https://admin.ntb.gov.np/image-cache/top_5_shiva_temples_in_kathmandu_valley_nepal-1624510458.jpeg?p=main&s=5e5bcc394ab20e61bb2919355a050453
-type3,Cultural,https://culturesofnepal.wordpress.com/wp-content/uploads/2018/09/26091-1240437_10151706090538090_58590359_n.jpg
-type4,Commercial,https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/78/aa/e2/this-photo-of-thamel.jpg?w=1200&h=1200&s=1
-type5,Natural,https://media.nepalhighlandtreks.com/uploads/media/natural-beauty-of-nepal.jpg
-type6,Wildlife,https://i.assetzen.net/i/LQi5ubqGm0CL/w:auto/h:400/q:70.jpg
+type1,Historic,historic.webp
+type2,Religious,religious.jpeg
+type3,Cultural,cultural.jpg
+type4,Commercial,commercial.jpg
+type5,Natural,natural.jpg
+type6,Wildlife,wildlife.jpg

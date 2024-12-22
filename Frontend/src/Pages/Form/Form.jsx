@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext, act, useEffect } from "react";
 import "./Form.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -7,30 +7,22 @@ import {
   SimpleOptionsSelector,
 } from "../../Components/FormComp/OptionsInput";
 import { useNavigate } from "react-router-dom";
+import { useFetch } from "../../ApiFetch/useFetch";
 import {
   food_options,
   themes_options,
   travel_options,
 } from "./FormOption";
-import bgImage from "../../Assets/Image/homepagebg.png";
+import bgImage from "../../Assets/Image/homepagebg.png"
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setformResponse } from "../../Redux/formResponseSlice";
-
 import { findClosestPlace } from "../../Components/FormComp/closestPath";
-import {
-  fetchAllActivities,
-  fetchAllPlaces,
-  fetchAllPlaceType,
-} from "../../Redux/apiFetchSlice";
-import {RotatingLines} from 'react-loader-spinner'
 
 export const Form = () => {
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { allPlaces, allActivities, allPlaceTypes, status } = useSelector(
-    (state) => state.fetchApi
-  );
 
   const [day, setDay] = useState("");
   const [startDate, setStartDate] = useState(new Date());
@@ -46,29 +38,22 @@ export const Form = () => {
   const [activities, setActivities] = useState([]);
   const [transportation, setTransportation] = useState("");
   const [foods, setFoods] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // New loading state
 
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchAllPlaces());
-      dispatch(fetchAllActivities());
-      dispatch(fetchAllPlaceType());
-    }
-  }, [dispatch, allPlaces, allActivities, allPlaceTypes, status]);
+  // APi fetch
+  const { data: allActivities } = useFetch("all-activities");
+  const { data: allPlaces } = useFetch("all-places");
+  const { data: allPlaceTypes } = useFetch("all-placetypes");
 
-  if (status === "loading") {
-    return <h1>Loading...</h1>;
-  }
 
+  // Handling form Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!day || !budget || !startLoc) {
-      alert("Please enter the number of days and your budget");
+      alert("Please Number of days and your budget");
       return;
     }
 
-    setIsLoading(true); // Set loading state to true
-
+  
     const formData = {
       user_location: startLoc,
       user_lat: parseFloat(startLat),
@@ -82,23 +67,24 @@ export const Form = () => {
       budget: parseInt(budget),
       food_pref: foods || "",
       travel_pref: transportation || ""
-
     };
-
+    
     try {
-      const response = await axios.post("generate-plan", formData);
+      // Send formData directly
+      const response = await axios.post('http://127.0.0.1:8000/generate-plan', formData);
+      
       if (response.status === 200) {
-        console.log("Plan generated successfully:", response.data);
-        dispatch(setformResponse(response.data));
-        navigate("/plans");
-      } else {
-        alert("Failed to generate plan. Please try again.");
+        console.log('Plan generated successfully:', response.data);
+         // Dispatch response to Redux store
+         dispatch(setformResponse(response.data));
+         navigate('/plans');
+      } 
+      else {
+        alert('Failed to generate plan. Please try again.');
       }
     } catch (error) {
-      console.error("Error generating plan:", error);
-      alert("An error occurred. Please try again.");
-    } finally {
-      setIsLoading(false); // Set loading state to false after completion
+      console.error('Error generating plan:', error);
+      alert('An error occurred. Please try again.');
     }
     
            // Clear form inputs
@@ -118,7 +104,9 @@ export const Form = () => {
            setFoods("");
   };
 
+  
 
+  // Toggling Currency
   const toggleCurrency = () => {
     setCurrency((prevCurrency) => (prevCurrency === "NPR" ? "USD" : "NPR"));
   };
